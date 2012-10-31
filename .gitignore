@@ -38,11 +38,5 @@ intermediate
 publish
 .idea
 
-# build script local files
-build/buildinfo.properties
-build/config/buildinfo.properties
-
-intermediate
-publish
-parser/spam
-parser/cookies
+spam
+cookies

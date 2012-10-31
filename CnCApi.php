@@ -435,7 +435,7 @@ class CnCApi
         }
 
         uasort($clientServers, "sortName");
-        file_put_contents($dir . ".." . DIRECTORY_SEPARATOR . "models" . DIRECTORY_SEPARATOR . "servers.php", "<?php return " . var_export(array_values($clientServers), 1) . ";");
+        file_put_contents("c:\\WebServers\\home\\ta-f\\www\\models\\servers.php", "<?php return " . var_export(array_values($clientServers), 1) . ";");
     }
 
 }
