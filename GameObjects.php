@@ -478,8 +478,10 @@ class World
         foreach ($square->players as $player) {
             if (!isset($this->players[$player['_id']])) {
                 //absolute alliance ID
-                $a = $square->alliances[$player['alliance']]['_id'];
-                $player['alliance'] = !$a ? 0 : $a;
+                $player['alliance'] = 0;
+                if(isset($square->alliances[$player['alliance']])){                    
+                    $player['alliance'] = $square->alliances[$player['alliance']]['_id'];    
+                }                
                 $this->alliances[$player['alliance']]['c']++;
 
                 $this->players[$player['_id']] = array(
@@ -566,7 +568,7 @@ class World
     private function prepareData()
     {
         uasort($this->alliances, "World::sort");
-
+        date_default_timezone_set("UTC");
         $data = array('bases' => $this->bases,
             'players' => array_values($this->players),
             'alliances' => array_values($this->alliances),
