@@ -196,6 +196,7 @@ class City extends AliveBase
     public $moveCooldownEndStep;
     public $moveLockdownEndStep;
     public $name;
+    public $hasRcover_mb;
 
     /**
      * @static
@@ -213,9 +214,10 @@ class City extends AliveBase
         $base->isAlerted = ((($cityData >> 3) & 1) != 0);
         $base->hasCooldown = ((($cityData >> 4) & 1) != 0);
         $base->hasRecovery = ((($cityData >> 5) & 1) != 0);
-        $base->isDefenseDamaged = ((($cityData >> 6) & 1) != 0);
-        $base->level = (($cityData >> 7) & 255);
-        $base->radius = (($cityData >> 15) & 15);
+        $base->hasRcover_mb = ((($cityData >> 6) & 1) != 0);
+        $base->isDefenseDamaged = ((($cityData >> 7) & 1) != 0);
+        $base->level = (($cityData >> 8) & 255);
+        $base->radius = (($cityData >> 16) & 15);
         $base->playerId = (($cityData >> 22) & 1023);
         $pos += 5;
 
@@ -242,11 +244,15 @@ class City extends AliveBase
             $pos += $out->size;
             $base->moveLockdownEndStep = Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
-            $hz = Base91::DecodeFlexInt($details, $pos, $out);
+            Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
         }
         if ($base->hasRecovery) {
             $base->recoveryEndStep = Base91::DecodeFlexInt($details, $pos, $out);
+            $pos += $out->size;
+        }
+        if ($base->hasRcover_mb) {
+            Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
         }
         $base->conditionBuildings = Base91::DecodeFlexInt($details, $pos, $out);
@@ -520,6 +526,7 @@ class World
 //                        'mc' => $mark->moveCooldownEndStep,
 //                        'ml' => $mark->moveLockdownEndStep,
                         'ps' => $mark->protectionEndStep,
+//                        'ct' => $mark->codeTime
                     );
                     break;
                 case "NPCBase":
@@ -586,7 +593,7 @@ class World
         curl_setopt($ch, CURLOPT_TIMEOUT, 200);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, CnCApi::makePostData(array('key' => "wohdfo97wg4iurvfdc t7yaigvrufbs", 'world' => $this->server, 'data' =>  gzcompress("ccmapData = " .json_encode($this->prepareData()).";"))));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, CnCApi::makePostData(array('key' => "wohdfo97wg4iurvfdc t7yaigvrufbs", 'world' => $this->server, 'data' => gzcompress("ccmapData = " . json_encode($this->prepareData()) . ";"))));
 
         return curl_exec($ch);
     }

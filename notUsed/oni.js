@@ -159,7 +159,7 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor(a, b, c, d) 
     this.isAlerted = (g >> 3 & 1) != 0;
     this.hasCooldown = (g >> 4 & 1) != 0;
     this.hasRecovery = (g >> 5 & 1) != 0;
-    var h = (g >> 6 & 1) != 0;
+    var isDefenseDamaged = (g >> 6 & 1) != 0;
     this.Level = g >> 7 & 255;
     this.Radius = g >> 15 & 15;
     this.PlayerId = g >> 22 & 1023;
@@ -190,7 +190,7 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor(a, b, c, d) 
     }
     this.ConditionBuildings = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
     d += f;
-    if (h) {
+    if (isDefenseDamaged) {
         this.ConditionDefense = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
         d += f;
     } else {
@@ -200,6 +200,73 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor(a, b, c, d) 
     d += f;
     this.Id = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
     this.Name = c.substr(d + f);
+    return this;
+}
+function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor (type, world, details, pos) {
+    var $createHelper;
+    var e = {};
+    $I.FFKFQE.prototype.CPTHBH.call(this, type, world);
+    var f;
+    this.JYPDYU = -1;
+    this.LKUPOD = -1;
+    this.FKPXOU = -1;
+    this.VTQBQV = -1;
+    this.WYBSES = -1;
+    this.BQSPZH = -1;
+    this.AIVBAC = -1;
+    var g = $I.JKQSQL.LAJTKU(details, pos);
+    this.isAttacked = (g & 1) != 0;
+    var isLocked = (g >> 1 & 1) != 0;
+    var isProtected = (g >> 2 & 1) != 0;
+    var isAltered = (g >> 3 & 1) != 0;
+    var hasCool = (g >> 4 & 1) != 0;
+    var hasRec = (g >> 5 & 1) != 0;
+    var hsFlag = (g >> 6 & 1) != 0;
+    var isDefenceDamaged = (g >> 7 & 1) != 0;
+    this.level = g >> 8 & 255;
+    this.radius = g >> 16 & 15;
+    this.playerId = g >> 22 & 1023;
+    pos += 5;
+    if (isLocked) {
+        this.JYPDYU = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    if (isProtected) {
+        this.LKUPOD = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    if (isAltered) {
+        this.FKPXOU = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+        this.VTQBQV = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    if (hasCool) {
+        this.WYBSES = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    if (hasRec) {
+        this.BQSPZH = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+        this.SYNMMZ = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    if (hsFlag) {
+        this.AIVBAC = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    }
+    this.condBuild = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+    pos += f;
+    if (isDefenceDamaged) {
+        this.condDef = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+        pos += f;
+    } else {
+        this.condDef = -1;
+    }
+    this.DefenseAutoRepairStartStep = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+    pos += f;
+    this.id = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
+    this.name = details.substr(pos + f);
     return this;
 }
 function ClientLib.Data.WorldSector.WorldObjectNPCBase.prototype.$ctor$87(type, world, details, pos) {
