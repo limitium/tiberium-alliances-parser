@@ -21,7 +21,7 @@ Everyone welcome!
 ";
 
 $post = "
- Added Monde 7, Mundo 4 (Portuguesa), Welt 18, World 50 (Europe), Mundo 5 (España)";
+ Added Мир 1, Världen 1, Svet 1, Lume 1, Verden 1, Világ 1, Maailma 1, Verden 1, Svět 1.";
 $data = $api->poll(array(
     "requests" => "WC:A\fCTIME:$time\fCHAT:\fWORLD:\fGIFT:\fACS:0\fASS:0\fCAT:0\f"
 ));
