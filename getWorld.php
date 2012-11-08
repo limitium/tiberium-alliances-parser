@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "GameObjects.php";
 $start = microtime(true);
 
 $serverId = $argv[1];
-$api = new CnCApi($serverId);
+$api = new CnCApi($serverId, isset($argv[2]) ? $argv[2] : false);
 
 if ($api->authorize()) {
 

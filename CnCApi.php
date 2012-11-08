@@ -3,13 +3,14 @@ class CnCApi
 {
 
     private $session = "";
+    private $worldSession = "";
     private $server;
     private $pollRequests = 0;
     private $url = null;
 
     private $ch = null;
 
-    public function __construct($server)
+    public function __construct($server, $worldSession = false)
     {
         $this->servers = require dirname(__FILE__) . DIRECTORY_SEPARATOR . "servers.php";
 
@@ -21,9 +22,14 @@ class CnCApi
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
 
+        curl_setopt($this->ch, CURLOPT_TIMEOUT, 10);
+
         $this->selectWorld($server);
 
-        if (!$this->getWorldSession()) {
+        if ($worldSession) {
+            $this->worldSession = $worldSession;
+        }
+        if (!$worldSession && !$this->getWorldSession()) {
             print_r("World session failed\r\n");
             die;
         }
@@ -67,8 +73,6 @@ class CnCApi
 
         $url = $this->url;
         curl_setopt($this->ch, CURLOPT_URL, $url . "/$service/Service.svc/ajaxEndpoint/" . $method);
-
-        curl_setopt($this->ch, CURLOPT_TIMEOUT, 15);
 
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -192,14 +196,13 @@ class CnCApi
     public function authorize()
     {
         print_r("Open ingame session ");
-
+        $this->setSession($this->worldSession);
         $data = $this->getData("OpenSession", array(
-            "refId" => time() * 10,
-            "rest" => "true",
+            "refId" => time(),
+            "reset" => "true",
             "version" => "-1"
         ));
         $gameSession = $data->i;
-
         if (!$gameSession || "00000000-0000-0000-0000-000000000000" == $gameSession) {
             print_r("failed\r\n");
 //            file_put_contents("c:\\fail" . $this->getServer(), '');
@@ -329,7 +332,7 @@ class CnCApi
             print_r("World session: {$session[1]}\r\n");
 
             preg_match("/ action=\"(.*?)\/index.aspx\" /", $res, $url);
-            $this->session = $session[1];
+            $this->worldSession = $session[1];
             return $session[1];
         }
         return null;

@@ -147,59 +147,71 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor$87(type, wor
     return this;
 }
 
-function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor(a, b, c, d) {
+function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor (a, b, c, d) {
     var $createHelper;
     var e = {};
-    $I.MKDWEX.prototype.QPTRIW.call(this, a, b);
+    $I.FYQWYB.prototype.NQZQKI.call(this, a, b);
     var f;
-    var g = $I.JVIEQK.EPNSYF(c, d);
+    this.lockdownEndStep = -1;
+    this.protectionEndStep = -1;
+    this.suportStart = -1;
+    this.supportEnd = -1;
+    this.HMSIIJ = -1;
+    this.RPVXRZ = -1;
+    this.WHKUKB = -1;
+    var g = $I.FKZMMP.NBIQUL(c, d);
     this.isAttacked = (g & 1) != 0;
-    this.isLocked = (g >> 1 & 1) != 0;
-    this.isProtected = (g >> 2 & 1) != 0;
-    this.isAlerted = (g >> 3 & 1) != 0;
-    this.hasCooldown = (g >> 4 & 1) != 0;
-    this.hasRecovery = (g >> 5 & 1) != 0;
-    var isDefenseDamaged = (g >> 6 & 1) != 0;
-    this.Level = g >> 7 & 255;
-    this.Radius = g >> 15 & 15;
-    this.PlayerId = g >> 22 & 1023;
+    var isLocked = (g >> 1 & 1) != 0;
+    var isProteced = (g >> 2 & 1) != 0;
+    var isAltered = (g >> 3 & 1) != 0;
+    var hasCooldown = (g >> 4 & 1) != 0;
+    var hasRecovery = (g >> 5 & 1) != 0;
+    var hz = (g >> 6 & 1) != 0;
+    var isDefenseDamaged = (g >> 7 & 1) != 0;
+    this.level = g >> 8 & 255;
+    this.radius = g >> 16 & 15;
+    this.playerId = g >> 22 & 1023;
     d += 5;
-    if (this.isLocked) {
-        this.LockdownEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    if (isLocked) {
+        this.lockdownEndStep = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
     }
-    if (this.isProtected) {
-        this.ProtectionEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    if (isProteced) {
+        this.protectionEndStep = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
     }
-    if (this.isAlerted) {
-        this.SupportAlertStartStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    if (isAltered) {
+        this.suportStart = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
-        this.SupportAlertEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
-        d += f;
-    }
-    if (this.hasCooldown) {
-        this.MoveCooldownEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
-        d += f;
-        this.MoveLockdownEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+        this.supportEnd = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
     }
-    if (this.hasRecovery) {
-        this.RecoveryEndStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    if (hasCooldown) {
+        this.HMSIIJ = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
     }
-    this.ConditionBuildings = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    if (hasRecovery) {
+        this.RPVXRZ = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
+        d += f;
+        this.IPIVWX = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
+        d += f;
+    }
+    if (hz) {
+        this.WHKUKB = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
+        d += f;
+    }
+    this.conditionBuildings = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
     d += f;
     if (isDefenseDamaged) {
-        this.ConditionDefense = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+        this.conditionDefense = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
         d += f;
     } else {
-        this.ConditionDefense = -1;
+        this.conditionDefense = -1;
     }
-    this.DefenseAutoRepairStartStep = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
+    this.defenseAutoRepairStep = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
     d += f;
-    this.Id = (e.$r = $I.JVIEQK.QERMIK(c, d, e), f = e.c, e.$r);
-    this.Name = c.substr(d + f);
+    this.id = (e.$r = $I.FKZMMP.UXIOBH(c, d, e), f = e.c, e.$r);
+    this.name = c.substr(d + f);
     return this;
 }
 function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor (type, world, details, pos) {
