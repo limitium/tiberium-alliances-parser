@@ -200,11 +200,13 @@ class CnCApi
         $data = $this->getData("OpenSession", array(
             "refId" => time(),
             "reset" => "true",
-            "version" => "-1"
+            "version" => "-1",
+            "platformId" => 1
         ));
         $gameSession = $data->i;
         if (!$gameSession || "00000000-0000-0000-0000-000000000000" == $gameSession) {
             print_r("failed\r\n");
+            print_r($data);
 //            file_put_contents("c:\\fail" . $this->getServer(), '');
             return false;
         }

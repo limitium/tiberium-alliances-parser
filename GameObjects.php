@@ -193,10 +193,10 @@ class City extends AliveBase
     public $hasRecovery;
     public $playerId;
     public $protectionEndStep;
-    public $moveCooldownEndStep;
+    public $cooldownEndStep;
     public $moveLockdownEndStep;
     public $name;
-    public $hasRcover_mb;
+    public $hasMoveRecovery;
 
     /**
      * @static
@@ -214,7 +214,7 @@ class City extends AliveBase
         $base->isAlerted = ((($cityData >> 3) & 1) != 0);
         $base->hasCooldown = ((($cityData >> 4) & 1) != 0);
         $base->hasRecovery = ((($cityData >> 5) & 1) != 0);
-        $base->hasRcover_mb = ((($cityData >> 6) & 1) != 0);
+        $base->hasMoveRecovery = ((($cityData >> 6) & 1) != 0);
         $base->isDefenseDamaged = ((($cityData >> 7) & 1) != 0);
         $base->level = (($cityData >> 8) & 255);
         $base->radius = (($cityData >> 16) & 15);
@@ -240,18 +240,16 @@ class City extends AliveBase
             $pos += $out->size;
         }
         if ($base->hasCooldown) {
-            $base->moveCooldownEndStep = Base91::DecodeFlexInt($details, $pos, $out);
-            $pos += $out->size;
-            $base->moveLockdownEndStep = Base91::DecodeFlexInt($details, $pos, $out);
-            $pos += $out->size;
-            Base91::DecodeFlexInt($details, $pos, $out);
+            $base->cooldownEndStep = Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
         }
         if ($base->hasRecovery) {
             $base->recoveryEndStep = Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
+            Base91::DecodeFlexInt($details, $pos, $out);
+            $pos += $out->size;
         }
-        if ($base->hasRcover_mb) {
+        if ($base->hasMoveRecovery) {
             Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
         }

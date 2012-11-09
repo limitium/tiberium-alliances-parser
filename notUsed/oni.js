@@ -233,7 +233,7 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor (type, world
     var isAltered = (g >> 3 & 1) != 0;
     var hasCool = (g >> 4 & 1) != 0;
     var hasRec = (g >> 5 & 1) != 0;
-    var hsFlag = (g >> 6 & 1) != 0;
+    var moveRecovery = (g >> 6 & 1) != 0;
     var isDefenceDamaged = (g >> 7 & 1) != 0;
     this.level = g >> 8 & 255;
     this.radius = g >> 16 & 15;
@@ -263,7 +263,7 @@ function ClientLib.Data.WorldSector.WorldObjectCity.prototype.$ctor (type, world
         this.SYNMMZ = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
         pos += f;
     }
-    if (hsFlag) {
+    if (moveRecovery) {
         this.AIVBAC = (e.$r = $I.JKQSQL.OKTXEA(details, pos, e), f = e.c, e.$r);
         pos += f;
     }

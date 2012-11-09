@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "CnCApi.php";
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "GameObjects.php";
