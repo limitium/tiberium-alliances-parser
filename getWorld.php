@@ -13,7 +13,7 @@ if ($api->authorize()) {
 
     $world = new World($serverId);
 
-    $time = time();
+    $time = CnCApi::getTime();
 
     $resp = $api->poll(array(
         "requests" => "WC:A\fCTIME:$time\fCHAT:\fWORLD:\fGIFT:\fACS:0\fASS:0\fCAT:0\f"
@@ -29,7 +29,7 @@ if ($api->authorize()) {
 
         $request = $world->request(0, $y, $server["x"], $y);
 
-        $time = time();
+        $time = CnCApi::getTime();
         $resp = $api->poll(array(
             "requests" => "UA\fWC:A\fCTIME:$time\fCHAT:\fWORLD:$request\fGIFT:\fACS:1\fASS:1\fCAT:1\f"
         ), true);

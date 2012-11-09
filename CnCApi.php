@@ -198,7 +198,7 @@ class CnCApi
         print_r("Open ingame session ");
         $this->setSession($this->worldSession);
         $data = $this->getData("OpenSession", array(
-            "refId" => time(),
+            "refId" => CnCApi::getTime(),
             "reset" => "true",
             "version" => "-1",
             "platformId" => 1
@@ -213,6 +213,11 @@ class CnCApi
         print_r("$gameSession\r\n");
         $this->setSession($gameSession);
         return $gameSession;
+    }
+
+    public static function getTime()
+    {
+        return microtime(1)*1000;
     }
 
     public function initCookie()
