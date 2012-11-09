@@ -71,5 +71,4 @@ if ($api->authorize()) {
     //    }
     print_r("Total time: " . (microtime(true) - $start));
 }
-
 $api->close();

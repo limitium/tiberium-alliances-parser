@@ -9,7 +9,11 @@ class Square
     public $sx;
     public $sy;
     public $marks = array();
-    public $alliances = array();
+    public $alliances = array(0 => array(
+        '_id' => 0,
+        'name' => "No Alliance",
+        'points' => 0,
+    ));
     public $players = array();
 
     /**
@@ -81,8 +85,7 @@ class Square
                 $pos += $out->size;
                 $peaceDuration = Base91::DecodeFlexInt($playerData, $pos, $out);
                 $pos += $out->size;
-            }
-            else {
+            } else {
                 $peaceStart = 0;
                 $peaceDuration = 0;
             }
@@ -258,8 +261,7 @@ class City extends AliveBase
         if ($base->isDefenseDamaged) {
             $base->conditionDefense = Base91::DecodeFlexInt($details, $pos, $out);
             $pos += $out->size;
-        }
-        else {
+        } else {
             $base->conditionDefense = -1;
         }
         $base->defenceAutoRepairStartStep = Base91::DecodeFlexInt($details, $pos, $out);
@@ -306,15 +308,11 @@ class POI extends Marker
         return $poi;
     }
 }
+
 class World
 {
     public $players = array();
-    public $alliances = array(0 => array(
-        'a' => 0,
-        'an' => "No Alliance",
-        'p' => 0,
-        'c' => 0,
-    ));
+    public $alliances = array();
     public $bases = array();
     public $pois = array();
     private $server;
@@ -360,7 +358,8 @@ class World
         foreach ($square->players as $player) {
             if (!isset($this->players[$player['_id']])) {
                 //absolute alliance ID
-                $a = $square->alliances[$player['alliance']]['_id'];
+                $pa = $player['alliance'];
+                $a = $square->alliances[$pa]['_id'];
                 $player['alliance'] = !$a ? 0 : $a;
                 $this->alliances[$player['alliance']]['c']++;
 
