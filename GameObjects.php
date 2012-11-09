@@ -447,7 +447,6 @@ class World
             'players' => array_values($this->players),
             'alliances' => array_values($this->alliances),
             'pois' => array_values($this->pois),
-            'updated' => date("d/m/Y H:i:s"),
             'timestamp' => time(),
         );
         return $data;
@@ -464,6 +463,8 @@ class World
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, CnCApi::makePostData(array('key' => "wohdfo97wg4iurvfdc t7yaigvrufbs", 'world' => $this->server, 'data' => gzcompress("ccmapData = " . json_encode($this->prepareData()) . ";"))));
 
-        return curl_exec($ch);
+        $resp = curl_exec($ch);
+        curl_close($ch);
+        return $resp;
     }
 }

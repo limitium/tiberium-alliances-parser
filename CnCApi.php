@@ -217,7 +217,7 @@ class CnCApi
 
     public static function getTime()
     {
-        return microtime(1)*1000;
+        return round(microtime(1)*1000);
     }
 
     public function initCookie()
