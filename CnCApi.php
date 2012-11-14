@@ -49,7 +49,7 @@ class CnCApi
 
         $res = curl_exec($this->ch);
 
-        file_put_contents("c:\\selectWorld.html", $res);
+//        file_put_contents("c:\\selectWorld.html", $res);
     }
 
     public function selectWorld($server)
@@ -233,7 +233,7 @@ class CnCApi
         ));
 
         $res = curl_exec($this->ch);
-        file_put_contents("c:\\init.html", $res);
+//        file_put_contents("c:\\init.html", $res);
         print_r("Cookie inited\r\n");
     }
 
@@ -252,7 +252,7 @@ class CnCApi
         curl_setopt($this->ch, CURLOPT_POST, 0);
 
         $res = curl_exec($this->ch);
-        file_put_contents("c:\\logpage.html", $res);
+//        file_put_contents("c:\\logpage.html", $res);
         print_r("Login page retrieved\r\n");
     }
 
@@ -291,7 +291,7 @@ class CnCApi
 
 
         $res = curl_exec($this->ch);
-        file_put_contents("c:\\login_post.html", $res);
+//        file_put_contents("c:\\login_post.html", $res);
     }
 
     private function logout()
@@ -314,7 +314,7 @@ class CnCApi
         curl_setopt($this->ch, CURLOPT_POST, 1);
         curl_setopt($this->ch, CURLOPT_HEADER, true);
         $res = curl_exec($this->ch);
-        file_put_contents("c:\\logout.html", $res);
+//        file_put_contents("c:\\logout.html", $res);
         die;
     }
 
@@ -332,7 +332,7 @@ class CnCApi
         ));
 
         $res = curl_exec($this->ch);
-        file_put_contents("c:\\launch.html", $res);
+//        file_put_contents("c:\\launch.html", $res);
         preg_match('<input type="hidden" name="sessionId" value="(.*)?" \/>', $res, $session);
 
         if (isset($session[1])) {

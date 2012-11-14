@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+date_default_timezone_set("UTC");
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "CnCApi.php";
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "GameObjects.php";
@@ -10,7 +11,8 @@ $serverId = $argv[1];
 $api = new CnCApi($serverId, isset($argv[2]) ? $argv[2] : false);
 
 if ($api->authorize()) {
-
+    print_r("Time: " . (microtime(true) - $start) . "\r\n");
+    $getStart = microtime(true);
     $world = new World($serverId);
 
     $time = CnCApi::getTime();
@@ -21,11 +23,8 @@ if ($api->authorize()) {
 
     $server = $api->servers[$serverId];
     $successParts = 0;
-    //    for ($x = 0; $x < 31; $x += 1) {
-    //        print_r("$x - " . ($x + 1) . " \r\n");
+    $squares = array();
     for ($y = 0; $y <= $server["y"]; $y += 1) {
-        //            print_r("   $y - " . ($y + 1) . " \r\n");
-        //            $world = request($x, $x + 1, $y, $y + 1);
 
         $request = $world->request(0, $y, $server["x"], $y);
 
@@ -63,12 +62,16 @@ if ($api->authorize()) {
             }
         }
     }
-    print_r("\r\nSucces parts:$successParts\r\n");
+    print_r("\r\nSucces parts:$successParts, time: " . (microtime(true) - $getStart) . " \r\n");
+    $decodeStart = microtime(1);
+    foreach ($squares as $squareData) {
+        $world->addSquare(Square::decode($squareData));
+    }
+    print_r("\r\nDecoded, time: " . (microtime(true) - $decodeStart) . " \r\n");
     if ($successParts == $server["y"]) {
         $uploadStart = microtime(true);
         print_r("Uploading: " . $world->toServer() . ", time: " . (microtime(true) - $uploadStart) . "\r\n");
     }
-    //    }
     print_r("Total time: " . (microtime(true) - $start));
 }
 $api->close();
